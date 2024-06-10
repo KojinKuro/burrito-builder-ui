@@ -9,10 +9,21 @@ function OrderForm(props) {
     clearInputs();
   }
 
+  function addIngredient(ingredientName) {
+    setIngredients((prevIngredients) => [...prevIngredients, ingredientName]);
+  }
+
+  function handleIngredient(e) {
+    e.preventDefault();
+
+    if (ingredients.includes(e.target.name)) return;
+    else addIngredient(e.target.name);
+  }
+
   function clearInputs() {
     setName("");
     setIngredients([]);
-  };
+  }
 
   const possibleIngredients = [
     "beans",
@@ -33,7 +44,7 @@ function OrderForm(props) {
       <button
         key={ingredient}
         name={ingredient}
-        // onClick={(e) => }
+        onClick={(e) => handleIngredient(e)}
       >
         {ingredient}
       </button>
@@ -47,7 +58,7 @@ function OrderForm(props) {
         placeholder="Name"
         name="name"
         value={name}
-        // onChange={(e) => }
+        onChange={(e) => setName(e.target.value)}
       />
 
       {ingredientButtons}

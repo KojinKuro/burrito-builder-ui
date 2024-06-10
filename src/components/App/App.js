@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import "./App.css";
 import { getOrders } from "../../apiCalls";
-import Orders from "../../components/Orders/Orders";
 import OrderForm from "../../components/OrderForm/OrderForm";
+import Orders from "../../components/Orders/Orders";
+import "./App.css";
 
 function App() {
   useEffect(() => {
@@ -16,7 +16,8 @@ function App() {
         <OrderForm />
       </header>
 
-      <Orders orders={"Here is where orders go"} />
+      {/* Here is where orders go */}
+      <Orders orders={[]} />
     </main>
   );
 }
