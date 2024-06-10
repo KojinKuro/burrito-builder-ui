@@ -110,4 +110,24 @@ describe("empty spec", () => {
       cy.get(".order").last().find("li").contains("beans");
     });
   });
+
+  it("should be able to delete orders", () => {
+    cy.intercept("DELETE", "http://localhost:3001/api/v1/orders/3", {
+      body: {},
+    }).as("mockDelete");
+
+    cy.getTestId("order-remove-button").last().click();
+
+    cy.wait("@mockDelete").then(() => {
+      cy.get(".order").should("have.length", 2);
+      cy.get(".order").first().contains("These");
+      cy.get(".order").first().find("li").should("have.length", 5);
+      cy.get(".order").first().find("li").first().contains("beans");
+      cy.get(".order").first().find("li").last().contains("jalapeno");
+      cy.get(".order").last().contains("Are");
+      cy.get(".order").last().find("li").should("have.length", 6);
+      cy.get(".order").last().find("li").first().contains("steak");
+      cy.get(".order").last().find("li").last().contains("jalapeno");
+    });
+  });
 });

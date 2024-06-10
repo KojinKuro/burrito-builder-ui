@@ -11,6 +11,12 @@ const Orders = (props) => {
             return <li key={index}>{ingredient}</li>;
           })}
         </ul>
+        <button
+          data-test-id="order-remove-button"
+          onClick={(e) => props.removeOrder(order.id)}
+        >
+          X
+        </button>
       </div>
     );
   });

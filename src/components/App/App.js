@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getOrders } from "../../apiCalls";
+import { deleteOrder, getOrders } from "../../apiCalls";
 import OrderForm from "../../components/OrderForm/OrderForm";
 import Orders from "../../components/Orders/Orders";
 import "./App.css";
@@ -15,6 +15,12 @@ function App() {
     setOrders((prevOrders) => [...prevOrders, order]);
   };
 
+  const removeOrder = (id) => {
+    deleteOrder(id).then(() => {
+      setOrders((prevOrders) => prevOrders.filter((order) => order.id !== id));
+    });
+  };
+
   return (
     <main className="App">
       <header>
@@ -23,7 +29,7 @@ function App() {
       </header>
 
       {/* Here is where orders go */}
-      <Orders orders={orders} />
+      <Orders orders={orders} removeOrder={removeOrder} />
     </main>
   );
 }
