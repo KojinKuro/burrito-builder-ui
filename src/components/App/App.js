@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { deleteOrder, getOrders } from "../../apiCalls";
 import OrderForm from "../../components/OrderForm/OrderForm";
 import Orders from "../../components/Orders/Orders";
+import { deleteOrder, getOrders } from "../../utils/apiCalls";
 import "./App.css";
 
 function App() {

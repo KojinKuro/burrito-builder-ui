@@ -11,6 +11,10 @@ const Orders = (props) => {
             return <li key={index}>{ingredient}</li>;
           })}
         </ul>
+        <p>
+          Total Cost:{" "}
+          {order.totalCost ? `$${order.totalCost.toFixed(2)}` : "Missing"}
+        </p>
         <button
           data-test-id="order-remove-button"
           onClick={(e) => props.removeOrder(order.id)}
