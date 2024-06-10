@@ -68,7 +68,12 @@ function OrderForm(props) {
 
       <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
 
-      <button onClick={(e) => handleSubmit(e)}>Submit Order</button>
+      <button
+        data-test-id="form-submit-button"
+        onClick={(e) => handleSubmit(e)}
+      >
+        Submit Order
+      </button>
     </form>
   );
 }

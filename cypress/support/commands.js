@@ -23,3 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("getTestId", (testSelector) => {
+  return cy.get(`[data-test-id=${testSelector}]`);
+});
