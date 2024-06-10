@@ -53,6 +53,7 @@ function OrderForm(props) {
         key={ingredient}
         name={ingredient}
         onClick={(e) => handleIngredient(e)}
+        data-test-id="ingredient-button"
       >
         {ingredient}
       </button>
@@ -71,7 +72,9 @@ function OrderForm(props) {
 
       {ingredientButtons}
 
-      <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
+      <p data-test-id="order-display">
+        Order: {ingredients.join(", ") || "Nothing selected"}
+      </p>
 
       <button
         data-test-id="form-submit-button"

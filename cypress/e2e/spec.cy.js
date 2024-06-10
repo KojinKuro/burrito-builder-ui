@@ -11,9 +11,9 @@ describe("empty spec", () => {
     cy.wait("@mockOrders").then((order) => {
       cy.get("form").should("have.length", 1);
       cy.get("form input").should("have.length", 1);
-      cy.get("form button").should("have.length", 13);
-      cy.get("form button").first().contains("beans");
-      cy.get("form button").eq(11).contains("sour cream");
+      cy.getTestId("ingredient-button").should("have.length", 12);
+      cy.getTestId("ingredient-button").first().contains("beans");
+      cy.getTestId("ingredient-button").last().contains("sour cream");
       cy.getTestId("form-submit-button").contains("Submit Order");
 
       cy.get(".order").should("have.length", 3);
@@ -128,6 +128,45 @@ describe("empty spec", () => {
       cy.get(".order").last().find("li").should("have.length", 6);
       cy.get(".order").last().find("li").first().contains("steak");
       cy.get(".order").last().find("li").last().contains("jalapeno");
+    });
+  });
+
+  it("should be able to only allow max two of a duplicate ingredient", () => {
+    cy.intercept("POST", "http://localhost:3001/api/v1/orders", {
+      body: {
+        id: 4,
+        name: "Data",
+        ingredients: ["beans", "beans", "steak", "steak"],
+      },
+    }).as("mockPost");
+
+    cy.getTestId("order-display").contains("Order: Nothing selected");
+
+    cy.getTestId("ingredient-button").then((buttons) => {
+      cy.wrap(buttons).eq(0).click();
+      cy.wrap(buttons).eq(0).click();
+      cy.getTestId("order-display").contains("Order: beans, beans");
+      cy.wrap(buttons).eq(0).click();
+      cy.wrap(buttons).eq(1).click();
+      cy.wrap(buttons).eq(1).click();
+      cy.getTestId("order-display").contains(
+        "Order: beans, beans, steak, steak"
+      );
+      cy.wrap(buttons).eq(1).click();
+    });
+    cy.get("form input").type("Data");
+    cy.getTestId("form-submit-button").click();
+
+    cy.wait("@mockPost").then(() => {
+      cy.get(".order").should("have.length", 4);
+      cy.get(".order").first().contains("These");
+      cy.get(".order").first().find("li").should("have.length", 5);
+      cy.get(".order").first().find("li").first().contains("beans");
+      cy.get(".order").first().find("li").last().contains("jalapeno");
+      cy.get(".order").last().contains("Data");
+      cy.get(".order").last().find("li").should("have.length", 4);
+      cy.get(".order").last().find("li").first().contains("beans");
+      cy.get(".order").last().find("li").last().contains("steak");
     });
   });
 });
