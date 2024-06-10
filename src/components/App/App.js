@@ -1,13 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getOrders } from "../../apiCalls";
 import OrderForm from "../../components/OrderForm/OrderForm";
 import Orders from "../../components/Orders/Orders";
 import "./App.css";
 
 function App() {
+  const [orders, setOrders] = useState([]);
+
   useEffect(() => {
-    getOrders().catch((err) => console.error("Error fetching:", err));
-  });
+    getOrders()
+      .then((data) => setOrders(data.orders))
+      .catch((err) => console.error("Error fetching:", err));
+  }, []);
 
   return (
     <main className="App">
@@ -17,7 +21,7 @@ function App() {
       </header>
 
       {/* Here is where orders go */}
-      <Orders orders={[]} />
+      <Orders orders={orders} />
     </main>
   );
 }
