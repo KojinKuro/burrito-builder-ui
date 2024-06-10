@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { possibleIngredients } from "../../data/ingredients";
 import { postOrder } from "../../utils/apiCalls";
-import { createIngredient } from "../../utils/ingredients";
 
 function OrderForm(props) {
   const [name, setName] = useState("");
@@ -31,21 +31,6 @@ function OrderForm(props) {
     setIngredients([]);
     setTotalCost(0);
   }
-
-  const possibleIngredients = [
-    createIngredient("beans", 0.5),
-    createIngredient("steak", 5),
-    createIngredient("carnitas", 4),
-    createIngredient("sofritas", 1),
-    createIngredient("lettuce", 0.25),
-    createIngredient("queso fresco", 1),
-    createIngredient("pico de gallo", 0.25),
-    createIngredient("hot sauce", 0.25),
-    createIngredient("guacamole", 3),
-    createIngredient("jalapenos", 0.5),
-    createIngredient("cilantro", 0.25),
-    createIngredient("sour cream", 0.5),
-  ];
 
   const ingredientButtons = possibleIngredients.map((ingredient) => {
     return (
