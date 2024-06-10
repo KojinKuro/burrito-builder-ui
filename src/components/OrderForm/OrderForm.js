@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { postOrder } from "../../apiCalls";
 
 function OrderForm(props) {
   const [name, setName] = useState("");
@@ -6,6 +7,10 @@ function OrderForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!name.length) return;
+    if (!ingredients.length) return;
+
+    postOrder({ name, ingredients }).then(props.addOrder);
     clearInputs();
   }
 
@@ -15,9 +20,7 @@ function OrderForm(props) {
 
   function handleIngredient(e) {
     e.preventDefault();
-
-    if (ingredients.includes(e.target.name)) return;
-    else addIngredient(e.target.name);
+    addIngredient(e.target.name);
   }
 
   function clearInputs() {

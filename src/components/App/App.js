@@ -8,16 +8,18 @@ function App() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    getOrders()
-      .then((data) => setOrders(data.orders))
-      .catch((err) => console.error("Error fetching:", err));
+    getOrders().then((data) => setOrders(data.orders));
   }, []);
+
+  const addOrder = (order) => {
+    setOrders((prevOrders) => [...prevOrders, order]);
+  };
 
   return (
     <main className="App">
       <header>
         <h1>Burrito Builder</h1>
-        <OrderForm />
+        <OrderForm addOrder={addOrder} />
       </header>
 
       {/* Here is where orders go */}
