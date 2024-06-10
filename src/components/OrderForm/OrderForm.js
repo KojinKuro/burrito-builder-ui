@@ -15,6 +15,11 @@ function OrderForm(props) {
   }
 
   function addIngredient(ingredientName) {
+    const matchingIngredients = ingredients.filter(
+      (ingredient) => ingredient === ingredientName
+    );
+
+    if (matchingIngredients.length >= 2) return;
     setIngredients((prevIngredients) => [...prevIngredients, ingredientName]);
   }
 
